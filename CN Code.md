@@ -197,31 +197,27 @@ int main() {
 #file
 
 //server.c
-#include <stdio.h>
-#include <unistd.h>
+#include <stdio.h> 
+#include <unistd.h> 
 #include <arpa/inet.h>
 
-int main()
-{
-    int s, c, n;
-    char b[1024];
-    struct sockaddr_in a = {AF_INET, htons(8080), INADDR_ANY};
+int main() { int s, c, n; char b[1024]; struct sockaddr_in a = {AF_INET, htons(8080), INADDR_ANY};
 
-    s = socket(AF_INET, SOCK_STREAM, 0);
-    bind(s, (void *)&a, sizeof(a));
-    listen(s, 1);
+s = socket(AF_INET, SOCK_STREAM, 0);
+bind(s, (void *)&a, sizeof(a));
+listen(s, 1);
 
-    printf("Server waiting for a client...\n");
-    c = accept(s, NULL, NULL);
+printf("Server waiting for a client...\n");
+c = accept(s, NULL, NULL);
 
-    FILE *f = fopen("received_file", "wb");
-    while ((n = recv(c, b, sizeof(b), 0)) > 0)
-        fwrite(b, 1, n, f);
+FILE *f = fopen("received_file", "wb");
+while ((n = recv(c, b, sizeof(b), 0)) > 0)
+    fwrite(b, 1, n, f);
 
-    fclose(f);
-    close(c);
-    close(s);
-    printf("File received successfully as received_file\n");
+fclose(f);
+close(c);
+close(s);
+printf("File received successfully as received_file\n");
 }
 
 //client.c
